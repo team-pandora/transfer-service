@@ -5,10 +5,34 @@ import { ITransfer } from './interface';
 
 const TransferSchema = new mongoose.Schema<ITransfer & mongoose.Document>(
     {
-        data: {
+        requestId: {
             type: String,
             required: true,
             unique: true,
+        },
+        userId: {
+            type: String,
+            required: true,
+        },
+        recipients: {
+            type: [String],
+            required: true,
+        },
+        classification: {
+            type: String,
+            required: true,
+        },
+        fileName: {
+            type: String,
+            required: true,
+        },
+        fileSize: {
+            type: Number,
+            required: true,
+        },
+        destination: {
+            type: String,
+            required: true,
         },
     },
     {
@@ -17,7 +41,8 @@ const TransferSchema = new mongoose.Schema<ITransfer & mongoose.Document>(
     },
 );
 
-TransferSchema.index({ data: 1 });
+TransferSchema.index({ requestId: 1 });
+TransferSchema.index({ userId: 1 });
 
 TransferSchema.post(/save|update|findOneAndUpdate|insertMany/, errorHandler);
 

@@ -2,9 +2,18 @@ import * as mongoose from 'mongoose';
 
 export interface ITransfer {
     _id: mongoose.Types.ObjectId;
-    data: string;
+    requestId: string;
+    userId: string;
+    recipients: string[];
+    classification: string;
+    fileName: string;
+    fileSize: number;
+    destination: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
-export type INewTransfer = Pick<ITransfer, 'data'>;
+export type INewTransfer = Pick<
+    ITransfer,
+    'requestId' | 'userId' | 'classification' | 'fileName' | 'fileSize' | 'fileName' | 'destination'
+>;
