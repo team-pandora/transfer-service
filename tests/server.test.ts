@@ -11,8 +11,6 @@ describe('server tests', () => {
         app = Server.createExpressApp();
     });
 
-    test.todo('todo test'); // you can do todos for tests!
-
     describe('/isAlive', () => {
         it('should return alive', async () => {
             const response = await request(app).get('/isAlive').expect(200);

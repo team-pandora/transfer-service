@@ -15,5 +15,5 @@ export interface ITransfer {
 
 export type INewTransfer = Pick<
     ITransfer,
-    'requestId' | 'userId' | 'classification' | 'fileName' | 'fileSize' | 'fileName' | 'destination'
+    'requestId' | 'userId' | 'recipients' | 'classification' | 'fileName' | 'fileSize' | 'fileName' | 'destination'
 >;

@@ -35,7 +35,13 @@ const getTransferByIdRequestSchema = Joi.object({
  */
 const createTransferRequestSchema = Joi.object({
     body: {
-        data: Joi.string().alphanum().required(),
+        requestId: Joi.string().alphanum().required(),
+        userId: Joi.string().alphanum().required(),
+        recipients: Joi.array().items(Joi.string().alphanum()).required(),
+        classification: Joi.string().alphanum().required(),
+        fileName: Joi.string().alphanum().required(),
+        fileSize: Joi.number().required(),
+        destination: Joi.string().alphanum().required(),
     },
     query: {},
     params: {},

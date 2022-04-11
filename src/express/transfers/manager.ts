@@ -14,7 +14,7 @@ const createTransfer = (transfer: INewTransfer): Promise<ITransfer> => {
 };
 
 const deleteTransfer = (requestId: string): Promise<ITransfer | null> => {
-    return TransferModel.findByIdAndDelete(requestId).exec();
+    return TransferModel.findOneAndDelete({ requestId }).exec();
 };
 
 export { getTransfers, getTransferById, createTransfer, deleteTransfer };

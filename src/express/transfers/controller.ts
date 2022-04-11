@@ -6,7 +6,7 @@ const getTransfers = async (req: Request, res: Response) => {
 };
 
 const getTransferById = async (req: Request, res: Response) => {
-    res.json(await TransfersManager.getTransferById(req.params.id));
+    res.json(await TransfersManager.getTransferById(req.params.requestId));
 };
 
 const createTransfer = async (req: Request, res: Response) => {
@@ -14,7 +14,7 @@ const createTransfer = async (req: Request, res: Response) => {
 };
 
 const deleteTransfer = async (req: Request, res: Response) => {
-    res.json(await TransfersManager.deleteTransfer(req.params.id));
+    res.json(await TransfersManager.deleteTransfer(req.params.requestId));
 };
 
 export { getTransfers, getTransferById, createTransfer, deleteTransfer };
