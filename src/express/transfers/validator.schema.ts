@@ -25,7 +25,7 @@ const getTransferByIdRequestSchema = Joi.object({
     query: {},
     body: {},
     params: {
-        requestId: Joi.string().alphanum().required(),
+        id: Joi.string().alphanum().required(),
     },
 });
 
@@ -54,7 +54,7 @@ const deleteTransferRequestSchema = Joi.object({
     query: {},
     body: {},
     params: {
-        requestId: Joi.string().alphanum().required(),
+        id: Joi.string().alphanum().required(),
     },
 });
 

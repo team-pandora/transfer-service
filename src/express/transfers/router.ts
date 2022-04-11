@@ -13,7 +13,7 @@ const transfersRouter: Router = Router();
 
 transfersRouter.get('/', ValidateRequest(getTransferRequestSchema), wrapMiddleware(TransfersController.getTransfers));
 transfersRouter.get(
-    '/:requestId',
+    '/:id',
     ValidateRequest(getTransferByIdRequestSchema),
     wrapMiddleware(TransfersController.getTransferById),
 );
@@ -23,7 +23,7 @@ transfersRouter.post(
     wrapMiddleware(TransfersController.createTransfer),
 );
 transfersRouter.delete(
-    '/:requestId',
+    '/:id',
     ValidateRequest(deleteTransferRequestSchema),
     wrapMiddleware(TransfersController.deleteTransfer),
 );

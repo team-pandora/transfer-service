@@ -104,7 +104,7 @@ describe('transfers tests', () => {
                 };
                 await request(app).post('/api/transfers').send(newTransfer).expect(200);
                 const { body: transfers } = await request(app).get('/api/transfers').expect(200);
-                await request(app).delete(`/api/transfers/${transfers[0].requestId}`).expect(200);
+                await request(app).delete(`/api/transfers/${transfers[0]._id}`).expect(200);
                 const { body: transfersAfterDelete } = await request(app).get('/api/transfers').expect(200);
                 expect(transfersAfterDelete).toHaveLength(0);
             });
