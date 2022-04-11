@@ -2,15 +2,30 @@ import { Router } from 'express';
 import { wrapMiddleware } from '../../utils/express';
 import ValidateRequest from '../../utils/joi';
 import * as TransfersController from './controller';
-import { createTransferRequestSchema, getTransferRequestSchema } from './validator.schema';
+import {
+    createTransferRequestSchema,
+    deleteTransferRequestSchema,
+    getTransferByIdRequestSchema,
+    getTransferRequestSchema,
+} from './validator.schema';
 
 const transfersRouter: Router = Router();
 
 transfersRouter.get('/', ValidateRequest(getTransferRequestSchema), wrapMiddleware(TransfersController.getTransfers));
+transfersRouter.get(
+    '/:requestId',
+    ValidateRequest(getTransferByIdRequestSchema),
+    wrapMiddleware(TransfersController.getTransferById),
+);
 transfersRouter.post(
     '/',
     ValidateRequest(createTransferRequestSchema),
     wrapMiddleware(TransfersController.createTransfer),
+);
+transfersRouter.delete(
+    '/:requestId',
+    ValidateRequest(deleteTransferRequestSchema),
+    wrapMiddleware(TransfersController.deleteTransfer),
 );
 
 export default transfersRouter;
