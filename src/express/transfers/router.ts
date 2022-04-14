@@ -13,7 +13,7 @@ transfersRouter.get(
 );
 
 transfersRouter.get(
-    '/:id',
+    '/:transferId',
     ValidateRequest(TransfersValidator.getTransferByIdRequestSchema),
     wrapMiddleware(TransfersController.getTransferById),
 );
@@ -25,7 +25,7 @@ transfersRouter.post(
 );
 
 transfersRouter.delete(
-    '/:id',
+    '/:transferId',
     ValidateRequest(TransfersValidator.deleteTransferRequestSchema),
     wrapMiddleware(TransfersController.deleteTransfer),
 );

@@ -36,13 +36,13 @@ const TransferSchema = new mongoose.Schema<ITransfer & mongoose.Document>(
         },
     },
     {
-        timestamps: true,
+        timestamps: { createdAt: true },
         versionKey: false,
     },
 );
 
 TransferSchema.index({ requestId: 1 });
-TransferSchema.index({ userId: 1 });
+TransferSchema.index({ userId: 1, createdAt: -1 });
 
 TransferSchema.post(/save|update|findOneAndUpdate|insertMany/, errorHandler);
 

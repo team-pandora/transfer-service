@@ -9,6 +9,16 @@ jest.setTimeout(30000);
 const removeTransferCollection = async () =>
     mongoose.connection.collections[config.mongo.transfersCollectionName].deleteMany({});
 
+const newTransfer = {
+    requestId: 'reqId',
+    userId: 'userId',
+    recipients: ['recipient1', 'recipient2'],
+    classification: 'classification1',
+    fileName: 'fileName',
+    fileSize: 0,
+    destination: 'cargo',
+};
+
 describe('transfers tests', () => {
     let app: Express.Application;
 
@@ -37,29 +47,11 @@ describe('transfers tests', () => {
             });
 
             it('should fail with duplicate key error ', async () => {
-                const newTransfer = {
-                    requestId: 'reqId',
-                    userId: 'userId',
-                    recipients: ['recipient1', 'recipient2'],
-                    classification: 'classification',
-                    fileName: 'fileName',
-                    fileSize: 0,
-                    destination: 'destination',
-                };
                 await request(app).post('/api/transfers').send(newTransfer).expect(200);
                 await request(app).post('/api/transfers').send(newTransfer).expect(400);
             });
 
             it('should create a transfer', async () => {
-                const newTransfer = {
-                    requestId: 'reqId',
-                    userId: 'userId',
-                    recipients: ['recipient1', 'recipient2'],
-                    classification: 'classification',
-                    fileName: 'fileName',
-                    fileSize: 0,
-                    destination: 'destination',
-                };
                 const { body: createdTransfer } = await request(app)
                     .post('/api/transfers')
                     .send(newTransfer)
@@ -68,21 +60,11 @@ describe('transfers tests', () => {
                 expect(mongoose.Types.ObjectId.isValid(createdTransfer._id)).toBe(true);
                 expect(createdTransfer).toMatchObject(newTransfer);
                 expect(new Date(createdTransfer.createdAt).getTime()).toBeCloseTo(Date.now(), -2);
-                expect(new Date(createdTransfer.updatedAt).getTime()).toBeCloseTo(Date.now(), -2);
             });
         });
 
         describe('GET', () => {
             it('should return all transfers', async () => {
-                const newTransfer = {
-                    requestId: 'reqId',
-                    userId: 'userId',
-                    recipients: ['recipient1', 'recipient2'],
-                    classification: 'classification',
-                    fileName: 'fileName',
-                    fileSize: 0,
-                    destination: 'destination',
-                };
                 await request(app).post('/api/transfers').send(newTransfer).expect(200);
 
                 const { body: transfers } = await request(app).get('/api/transfers').expect(200);
@@ -93,15 +75,6 @@ describe('transfers tests', () => {
 
         describe('DELETE', () => {
             it('should delete a transfer', async () => {
-                const newTransfer = {
-                    requestId: 'reqId',
-                    userId: 'userId',
-                    recipients: ['recipient1', 'recipient2'],
-                    classification: 'classification',
-                    fileName: 'fileName',
-                    fileSize: 0,
-                    destination: 'destination',
-                };
                 await request(app).post('/api/transfers').send(newTransfer).expect(200);
                 const { body: transfers } = await request(app).get('/api/transfers').expect(200);
                 await request(app).delete(`/api/transfers/${transfers[0]._id}`).expect(200);

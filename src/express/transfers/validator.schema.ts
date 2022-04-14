@@ -1,31 +1,53 @@
 import * as Joi from 'joi';
+import config from '../../config';
 import { JoiMongoObjectId } from '../../utils/joi';
+import { TransfersSortByFields, TransfersSortOrders, classifications, destinations } from './interface';
 
 /**
  * GET /api/transfers?filename=<filename>&classification=<classification>
  */
 const getTransfersRequestSchema = Joi.object({
-    query: {
-        _id: JoiMongoObjectId.optional(),
-        requestId: Joi.string().alphanum().optional(),
-        userId: Joi.string().alphanum().optional(),
-        recipients: Joi.array().items(Joi.string().alphanum()).optional(),
-        classification: Joi.string().alphanum().optional(),
-        fileName: Joi.string().alphanum().optional(),
-        destination: Joi.string().alphanum().optional(),
-    },
+    query: Joi.object({
+        // Transfer fields
+        requestId: Joi.string().regex(config.transfers.idRegex).optional(),
+        userId: Joi.string().regex(config.transfers.idRegex).optional(),
+        recipients: Joi.array().items(Joi.string().regex(config.transfers.idRegex)).optional(),
+        classification: Joi.string()
+            .valid(...classifications)
+            .optional(),
+        fileName: Joi.string().regex(config.transfers.fileNameRegex).optional(),
+        destination: Joi.string()
+            .valid(...destinations)
+            .optional(),
+
+        // Sort
+        sortBy: Joi.string()
+            .valid(...TransfersSortByFields)
+            .optional(),
+        sortOrder: Joi.string()
+            .valid(...TransfersSortOrders)
+            .optional(),
+
+        // Pagination
+        page: Joi.number().integer().min(1).optional(),
+        pageSize: Joi.number().integer().min(1).optional(),
+    })
+        .with('sortBy', 'sortOrder')
+        .with('sortOrder', 'sortBy')
+        .with('page', ['pageSize', 'sortBy', 'sortOrder'])
+        .with('pageSize', ['page', 'sortBy', 'sortOrder']),
     body: {},
     params: {},
 });
 
 /**
- * GET /api/transfers/<requestId>
+ * GET /api/transfers/<transferId>
  */
 const getTransferByIdRequestSchema = Joi.object({
     query: {},
     body: {},
     params: {
-        id: Joi.string().alphanum().required(),
+        transferId: JoiMongoObjectId.required(),
     },
 });
 
@@ -41,26 +63,30 @@ const getTransferByIdRequestSchema = Joi.object({
  */
 const createTransferRequestSchema = Joi.object({
     body: {
-        requestId: Joi.string().alphanum().required(),
-        userId: Joi.string().alphanum().required(),
-        recipients: Joi.array().items(Joi.string().alphanum()).required(),
-        classification: Joi.string().alphanum().required(),
-        fileName: Joi.string().alphanum().required(),
+        requestId: Joi.string().regex(config.transfers.idRegex).required(),
+        userId: Joi.string().regex(config.transfers.idRegex).required(),
+        recipients: Joi.array().items(Joi.string().regex(config.transfers.idRegex)).required(),
+        classification: Joi.string()
+            .valid(...classifications)
+            .required(),
+        fileName: Joi.string().regex(config.transfers.fileNameRegex).required(),
         fileSize: Joi.number().required(),
-        destination: Joi.string().alphanum().required(),
+        destination: Joi.string()
+            .valid(...destinations)
+            .required(),
     },
     query: {},
     params: {},
 });
 
 /**
- * DELETE /api/transfers/<requestId>
+ * DELETE /api/transfers/<transferId>
  */
 const deleteTransferRequestSchema = Joi.object({
     query: {},
     body: {},
     params: {
-        id: Joi.string().alphanum().required(),
+        transferId: JoiMongoObjectId.required(),
     },
 });
 

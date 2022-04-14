@@ -9,7 +9,6 @@ services:
   transfers:
     build: .
     environment:
-      NODE_TLS_REJECT_UNAUTHORIZED: '0'
       PORT: 8000
       MONGO_URI: mongodb://mongo:27017/ts-template
       MONGO_TRANSFERS_COLLECTION_NAME: transfers
