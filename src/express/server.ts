@@ -26,10 +26,6 @@ class Server {
 
         app.use(setStartTime);
 
-        if (config.service.useCors) {
-            app.use(cors());
-        }
-
         app.use(helmet());
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));

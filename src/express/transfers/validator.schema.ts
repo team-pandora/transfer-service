@@ -4,7 +4,7 @@ import { JoiMongoObjectId } from '../../utils/joi';
 /**
  * GET /api/transfers?filename=<filename>&classification=<classification>
  */
-const getTransferRequestSchema = Joi.object({
+const getTransfersRequestSchema = Joi.object({
     query: {
         _id: JoiMongoObjectId.optional(),
         requestId: Joi.string().alphanum().optional(),
@@ -31,7 +31,13 @@ const getTransferByIdRequestSchema = Joi.object({
 
 /**
  * POST /api/transfers/
- * {{ data: 'someData123' }}
+ * {{ requestId: 'reqId',
+ * userId: 'userId',
+ * recipients: ['recipient1', 'recipient2'],
+ * classification: 'classification',
+ * fileName: 'fileName',
+ * fileSize: 1000,
+ * destination: 'destination' }}
  */
 const createTransferRequestSchema = Joi.object({
     body: {
@@ -59,7 +65,7 @@ const deleteTransferRequestSchema = Joi.object({
 });
 
 export {
-    getTransferRequestSchema,
+    getTransfersRequestSchema,
     createTransferRequestSchema,
     getTransferByIdRequestSchema,
     deleteTransferRequestSchema,

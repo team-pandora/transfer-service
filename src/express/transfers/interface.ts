@@ -13,7 +13,4 @@ export interface ITransfer {
     updatedAt: Date;
 }
 
-export type INewTransfer = Pick<
-    ITransfer,
-    'requestId' | 'userId' | 'recipients' | 'classification' | 'fileName' | 'fileSize' | 'fileName' | 'destination'
->;
+export type INewTransfer = Omit<ITransfer, '_id' | 'createdAt' | 'updatedAt'>;
