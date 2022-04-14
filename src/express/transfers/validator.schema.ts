@@ -70,7 +70,7 @@ const createTransferRequestSchema = Joi.object({
             .valid(...classifications)
             .required(),
         fileName: Joi.string().regex(config.transfers.fileNameRegex).required(),
-        fileSize: Joi.number().required(),
+        fileSize: Joi.number().positive().required(),
         destination: Joi.string()
             .valid(...destinations)
             .required(),
