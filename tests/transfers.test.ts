@@ -15,7 +15,7 @@ const newTransfer = {
     recipients: ['recipient1', 'recipient2'],
     classification: 'classification1',
     fileName: 'fileName',
-    fileSize: 0,
+    fileSize: 100,
     destination: 'cargo',
 };
 
