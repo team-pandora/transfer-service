@@ -36,7 +36,7 @@ const TransferSchema = new mongoose.Schema<ITransfer & mongoose.Document>(
         },
     },
     {
-        timestamps: { createdAt: true },
+        timestamps: { createdAt: true, updatedAt: false },
         versionKey: false,
     },
 );
