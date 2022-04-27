@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+
+  transfers:
+    build: .
+    environment:
+      PORT: 8000
+      MONGO_URI: mongodb://mongo:27017/ts-template
+      MONGO_TRANSFERS_COLLECTION_NAME: transfers
+    ports:
+      - 8000:8000
